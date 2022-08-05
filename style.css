@@ -1,0 +1,93 @@
+body {
+  /* Photo by <a href="https://unsplash.com/@akb001?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Andrey Haimin</a> on <a href="https://unsplash.com/s/photos/wood?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a> */
+  /* background-image: url(https://midnightbreeze.mypinata.cloud/ipfs/QmVcZrjzmT7CMa2nkgLN5nXVaydxtwPoyUdofNDLwzFTS8/4737.png);
+  background-size: cover; */
+
+  background: rgb(228, 20, 20);
+  background: -moz-radial-gradient(
+    circle,
+    rgba(228, 20, 20, 1) 45%,
+    rgba(198, 2, 42, 1) 100%
+  );
+  background: -webkit-radial-gradient(
+    circle,
+    rgba(228, 20, 20, 1) 45%,
+    rgba(198, 2, 42, 1) 100%
+  );
+  background: radial-gradient(
+    circle,
+    rgba(228, 20, 20, 1) 45%,
+    rgba(198, 2, 42, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e41414",endColorstr="#c6022a",GradientType=1);
+  color: rgb(230, 242, 253);
+  font-family: "Rubik", sans-serif;
+  text-shadow: 1px 2px #570d0d;
+  margin: 40px;
+}
+
+li {
+  padding: 5px;
+}
+
+h1 {
+  text-shadow: 3px 2px #570d0d;
+  font-size: 40px;
+}
+
+h1,
+h3 {
+  color: rgb(240, 248, 255);
+}
+
+h2 {
+  color: white;
+}
+
+.howtoplay {
+  padding-left: 20px;
+}
+
+#start {
+  background-color: rgba(207, 206, 206, 0.278);
+  border-radius: 7px;
+  padding: 1px 10px;
+}
+
+button {
+  border: 0px;
+}
+
+.btnplay {
+  font-size: 20px;
+  background-color: rgb(255, 255, 255);
+  padding: 10px;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.instruction-page {
+  background-color: rgba(207, 206, 206, 0.252);
+  border-radius: 5px;
+  padding: 1px 20px;
+  margin: 20px;
+}
+
+.summary {
+  padding: 1px 20px;
+}
+
+#btnarrowdiv {
+  position: relative;
+  left: 760px;
+  bottom: 10px;
+}
+
+footer {
+  /* position: fixed; */
+  margin-top: auto;
+  width: 100%;
+
+  color: white;
+  /* text-align: center; */
+}

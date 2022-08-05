@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exploding Kittens</title>
+    <script src="main.js" type="module" charset="utf-8"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/purecss@2.1.0/build/pure-min.css"
+      integrity="sha384-yHIFVG6ClnONEA5yB5DJXfW2/KC173DIQrYoZMEtBvGzmf0PKiGyNEqe9N6BNDBH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div>
+      <h1>Exploding Kittens Card Game</h1>
+    </div>
+
+    <div id="start" class="page">
+      <div class="summary">
+        <h3>
+          Exploding Kittens is a highly strategic, kitty-powered version of
+          Russian Roulette. Basically, if you draw an Exploding Kitten, you lose
+          and you are full of loser sad-sauce. All the other cards in the deck
+          help you avoid or mitigate your risk of drawing an Exploding Kitten.
+          If you don't explode, YOU WIN!
+        </h3>
+        <h2>
+          Skip all the talking and just Play:
+          <span><button class="btnplay">Play Game</button></span>
+        </h2>
+      </div>
+      <div>
+        <h1 class="howtoplay">How to Play:</h1>
+        <div id="btnarrowdiv">
+          <button class="btnarrow">
+            <ion-icon id="btnbackward" size="large" name="arrow-back-outline"
+              >1</ion-icon
+            >
+          </button>
+          <button class="btnarrow">
+            <ion-icon id="btnforward" size="large" name="arrow-forward-outline"
+              >2</ion-icon
+            >
+          </button>
+        </div>
+        <div id="one" class="instruction-page">
+          <h2>The Set Up</h2>
+          <ol>
+            <li>
+              1 Defuse card and 4 other cards will be dealt to each player so
+              that everyone has a hand of 5 cards total. Keep your hand secret.
+            </li>
+            <li>
+              The amount of exploding kittens corresponds to the amount of
+              players minus 1. For example, for a 4 player game, 3 Kittens will
+              be inserted, for a 3 player game,2 Kittens will be inserted.
+            </li>
+            <li>
+              The extra defuse cards and corresponding amount of exploding
+              kittens will be shuffled with the rest of the deck and place face
+              down. This is the Draw Pile.
+            </li>
+            <li>Player one will go first!</li>
+          </ol>
+        </div>
+        <div id="two" class="instruction-page">
+          <h3>Taking your Turn</h3>
+          <ol>
+            <li>
+              Play a card from your hand by placing it FACE UP on top of the
+              Discard Pile, and following the instructions on the card. Or play
+              no cards at all; that’s cool too.
+            </li>
+            <li>
+              After you follow the instructions on a card or play a Pair, you
+              can play more cards. You can play as many cards as you’d like.
+            </li>
+            <li>
+              Finally, end your turn by drawing a card from the top of the Draw
+              Pile into your hand and hoping it’s not an Exploding Kitten. (This
+              is different from most other games in that you END YOUR TURN by
+              drawing a card.)
+            </li>
+            <li>
+              <h4>Three More Things</h4>
+              <ul>
+                <li>You can count the cards left in the Draw Pile.</li>
+                <li>
+                  You won’t ever run out of cards in the Draw Pile, so there’s
+                  never a need to reshuffle.
+                </li>
+                <li>
+                  There is no maximum or minimum hand size. If you run out of
+                  cards in your hand, there’s no special action to take. Keep
+                  playing. You’ll draw at least 1 more card on your next turn.
+                </li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+        <div id="three" class="instruction-page">
+          <h3>Card Types</h3>
+          <ol>
+            <li>
+              Defuse(6 Cards) -
+              <span
+                ><ul>
+                  <li>
+                    If you drew an Exploding Kitten, you can play this card
+                    instead of dying. Place your Defuse card in the Discard
+                    Pile.
+                  </li>
+                  <li>
+                    Then take the Exploding Kitten, and without reordering or
+                    viewing the other cards, secretly put it back in the Draw
+                    Pile anywhere you’d like.
+                  </li>
+                  <li>
+                    Want to screw over the player right after you? Put the
+                    Kitten right on top of the deck. If you’d like, hold the
+                    deck under the table so that no one else can see where you
+                    put it. Now the next player goes (unless you must take
+                    multiple turns).
+                  </li>
+                </ul></span
+              >
+            </li>
+            <li>
+              Nope(5 Cards) -
+              <span
+                ><ul>
+                  <li>
+                    Stop any action except for an Exploding Kitten or a Defuse
+                    card. Imagine that any card (or Pair or Special Combo)
+                    beneath a Nope card no longer exists.
+                  </li>
+                  <li>
+                    You can also play a Nope on another Nope to negate it and
+                    create a Yup, and so on.
+                  </li>
+                  <li>
+                    You can play a Nope card at any time before an action has
+                    begun, even if it’s not your turn.
+                  </li>
+                </ul></span
+              >
+            </li>
+            <li>
+              Exploding Kitten(4 Cards) - You must show this card immediately.
+              Unless you have a Defuse card, you’re dead. Discard all of your
+              cards, including the Exploding Kitten.
+            </li>
+            <li>
+              Attack(4 Cards) - End your turn(s) without drawing and force the
+              next player to take 2 turns in a row. The victim of this card
+              takes a turn as normal (play cards, then draw). Then, when their
+              first turn is over, it’s their turn again. (If the victim of an
+              Attack card plays an Attack card, their turns are immediately
+              over, and the next player must take 2 turns.)
+            </li>
+            <li>
+              Skip(4 Cards) - Immediately end your turn without drawing a card.
+              (If you play a Skip card as a defense to an Attack card, it only
+              ends 1 of the 2 turns. 2 Skip cards would end both turns.)
+            </li>
+            <li>
+              Favor(4 Cards) - Force any other player to give you 1 card from
+              their hand. They choose which card to give you.
+            </li>
+            <li>
+              Shuffle(4 Cards) - Shuffle the Draw Pile thoroughly and randomly
+              without viewing the cards. (Useful when you know there’s an
+              Exploding Kitten coming.)
+            </li>
+            <li>
+              See the Future(5 Cards) - Peek at the top 3 cards from the Draw
+              Pile and put them back in the same order. Don’t show the cards to
+              the other players.
+            </li>
+            <li>
+              Cards with no Instructions(5 Cards x 4 each) - These cards are
+              powerless on their own, but can be played in Pairs or Special
+              Combos.
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div id="game" class="page">
+      <h2>This is the Game app.</h2>
+    </div>
+    <footer>
+      <p>
+        *All trademarks, logos and brand names are the property of their
+        respective owners. All company, product and service names used in this
+        website are for identification and illustration purposes only. Use of
+        these names,trademarks and brands does not imply endorsement.
+      </p>
+    </footer>
+    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+  </body>
+</html>
