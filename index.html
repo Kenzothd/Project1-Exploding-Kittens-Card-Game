@@ -36,22 +36,28 @@
         </h3>
         <h2>
           Skip all the talking and just Play:
-          <span><button class="btnplay">Play Game</button></span>
+          <span><button id="btngame">Play Game</button></span>
         </h2>
       </div>
       <div>
-        <h1 class="howtoplay">How to Play:</h1>
-        <div id="btnarrowdiv">
-          <button class="btnarrow">
-            <ion-icon id="btnbackward" size="large" name="arrow-back-outline"
-              >1</ion-icon
-            >
-          </button>
-          <button class="btnarrow">
-            <ion-icon id="btnforward" size="large" name="arrow-forward-outline"
-              >2</ion-icon
-            >
-          </button>
+        <div class="howtoplay">
+          <h1>How to Play:</h1>
+          <div id="btnarrowdiv">
+            <button class="btnarrow">
+              <ion-icon
+                id="btnbackward"
+                size="large"
+                name="arrow-back-outline"
+              ></ion-icon>
+            </button>
+            <button class="btnarrow">
+              <ion-icon
+                id="btnforward"
+                size="large"
+                name="arrow-forward-outline"
+              ></ion-icon>
+            </button>
+          </div>
         </div>
         <div id="one" class="instruction-page">
           <h2>The Set Up</h2>
@@ -197,15 +203,40 @@
       </div>
     </div>
 
+    <div id="inputname" class="page">
+      <div>
+        <h4>Input name to proceed</h4>
+        <label for="name">Name (required): </label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          required
+          aria-required="true"
+          placeholder="enter your name"
+        />
+        <button id="btnsubmit">submit</button>
+      </div>
+    </div>
+
     <div id="game" class="page">
-      <h2>This is the Game app.</h2>
+      <h2>Draw or play a card to start</h2>
+      <div id="gameboard-2P">
+        <div id="computer-cardstack">computer-cardstack</div>
+        <div id="draw-pile">draw-pile</div>
+        <div id="discard-pile">discard-pile</div>
+        <div id="btndrawdiv"><button id="btndraw">draw</button></div>
+        <div id="player-cardstack">player-cardstack</div>
+      </div>
+
+      <button id="btnstart">Back to Start Page</button>
     </div>
     <footer>
       <p>
-        *All trademarks, logos and brand names are the property of their
-        respective owners. All company, product and service names used in this
-        website are for identification and illustration purposes only. Use of
-        these names,trademarks and brands does not imply endorsement.
+        **DISCLAIMER: All trademarks, logos and brand names are the property of
+        their respective owners. All company, product and service names used in
+        this website are for identification and illustration purposes only. Use
+        of these names,trademarks and brands does not imply endorsement.
       </p>
     </footer>
     <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
