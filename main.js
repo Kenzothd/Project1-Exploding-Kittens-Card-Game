@@ -125,6 +125,7 @@ class DeckToIssue {
   issueFiveCards() {
     //pick 4 cards from the top as it loops down
     const iDLength = this.issuingDeck.length;
+    //create empty array and push 4 cards from issuing deck into it while also removing the 4 cards from it
     const arr = [];
     for (let i = iDLength - 1; i >= iDLength - 4; i--) {
       arr.push(this.issuingDeck[i]);
@@ -171,6 +172,46 @@ class Board {
     iD.addExplodingKittensCard();
     iD.shuffleDeck();
     this.drawPile.push(iD.issuingDeck);
+
+    // const $drawPile = $("#draw-pile");
+    // $drawPile.innerText = e.drawPile;
+    console.log(this.drawPile);
+
+    //change player name
+    const $playeronename = $("#playeronename");
+    $playeronename.text(this.players[0].playerName);
+    const $playertwoname = $("#playertwoname");
+    $playertwoname.text(this.players[1].playerName);
+
+    //loop player-cardstack and reflect cards to html
+    this.reflectPlayerCard();
+  }
+
+  //loop player-cardstack and reflect cards to html
+  reflectPlayerCard() {
+    const playerCards = this.players[0].playerCards;
+    for (let i = 0; i < playerCards.length; i++) {
+      const $div = $("<div>").addClass("pcard");
+      $("#player-cardstack").append($div);
+      $div.append(
+        $("<p>").text(this.players[0].playerCards[i].name).addClass("pcardname")
+      );
+      $div.append(
+        $("<p>").text(this.players[0].playerCards[i].text).addClass("pcardtext")
+      );
+    }
+  }
+
+  draw() {
+    const drawPile = this.drawPile;
+    // push last(top) card from drawpile to playercards array
+    this.players[0].playerCards.push(drawPile[0][drawPile.length - 1]);
+    // remove last(top) card from drawpile
+    drawPile[0].splice(drawPile.length - 1, 1);
+    //empty the board
+    $("#player-cardstack").empty();
+    //loop player-cardstack and reflect cards to html
+    this.reflectPlayerCard();
   }
 }
 
@@ -179,21 +220,22 @@ class Board {
 //Testing if it pushes to playerCards
 
 ///////////////////HANDLER///////////////////////
+let gameBoard = new Board();
 const startGame = () => {
-  const gameBoard = new Board();
+  gameBoard = new Board();
   const name = $("input").val();
-  gameBoard.start(name, "Computer");
+  // gameBoard.start(name, "Computer"); //turn back on once game ready
+  gameBoard.start("Player", "Computer");
   console.log(gameBoard.players);
-
   renderBoard();
 };
 
 ///////////////////RENDER///////////////////////
 const renderBoard = () => {
   //   const $board = $("#gameboard-2P").empty();
-  const $drawPile = $("#draw-pile");
   //   $drawPile.hide();
   //   $drawPile.append(this.players);
+  // const r = new Board();
 };
 
 const render = () => {
@@ -218,6 +260,10 @@ const main = () => {
     app.page = "#start";
     render();
   });
+  $("#btndraw").on("click", () => {
+    gameBoard.draw();
+    render();
+  });
   //   $("#btnforward").on("click", (event) => {
   //     render();
   //   });
@@ -228,3 +274,4 @@ const main = () => {
 };
 
 main();
+startGame();
