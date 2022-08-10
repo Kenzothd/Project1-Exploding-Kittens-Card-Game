@@ -22,7 +22,7 @@
   </head>
   <body>
     <div>
-      <h1>Exploding Kittens Card Game</h1>
+      <h1>Mini Exploding Kittens Card Game</h1>
     </div>
 
     <div id="start" class="page">
@@ -118,7 +118,7 @@
           <h3>Card Types</h3>
           <ol>
             <li>
-              Defuse(6 Cards) -
+              Defuse(4 Cards) -
               <span
                 ><ul>
                   <li>
@@ -142,7 +142,7 @@
               >
             </li>
             <li>
-              Nope(5 Cards) -
+              Nope(2 Cards) -
               <span
                 ><ul>
                   <li>
@@ -162,12 +162,12 @@
               >
             </li>
             <li>
-              Exploding Kitten(4 Cards) - You must show this card immediately.
+              Exploding Kitten(1 Cards) - You must show this card immediately.
               Unless you have a Defuse card, you’re dead. Discard all of your
               cards, including the Exploding Kitten.
             </li>
             <li>
-              Attack(4 Cards) - End your turn(s) without drawing and force the
+              Attack(2 Cards) - End your turn(s) without drawing and force the
               next player to take 2 turns in a row. The victim of this card
               takes a turn as normal (play cards, then draw). Then, when their
               first turn is over, it’s their turn again. (If the victim of an
@@ -175,28 +175,28 @@
               over, and the next player must take 2 turns.)
             </li>
             <li>
-              Skip(4 Cards) - Immediately end your turn without drawing a card.
+              Skip(2 Cards) - Immediately end your turn without drawing a card.
               (If you play a Skip card as a defense to an Attack card, it only
               ends 1 of the 2 turns. 2 Skip cards would end both turns.)
             </li>
             <li>
-              Favor(4 Cards) - Force any other player to give you 1 card from
+              Favor(2 Cards) - Force any other player to give you 1 card from
               their hand. They choose which card to give you.
             </li>
             <li>
-              Shuffle(4 Cards) - Shuffle the Draw Pile thoroughly and randomly
+              Shuffle(2 Cards) - Shuffle the Draw Pile thoroughly and randomly
               without viewing the cards. (Useful when you know there’s an
               Exploding Kitten coming.)
             </li>
             <li>
-              See the Future(5 Cards) - Peek at the top 3 cards from the Draw
+              See the Future(2 Cards) - Peek at the top 3 cards from the Draw
               Pile and put them back in the same order. Don’t show the cards to
               the other players.
             </li>
             <li>
-              Cards with no Instructions(5 Cards x 4 each) - These cards are
-              powerless on their own, but can be played in Pairs or Special
-              Combos.
+              Cards with no Instructions(5 different Cards x 2 each) - These
+              cards are powerless on their own, but can be played in Pairs or
+              Special Combos.
             </li>
           </ol>
         </div>
@@ -222,33 +222,27 @@
     <div id="game" class="page">
       <h2>Draw or play a card to start</h2>
       <div id="gameboard-2P">
-        <div id="computer-cardstack">
-          <div id="ccard-one" class="ccard">
-            <p class="cardname">exploding kittens</p>
+        <div>
+          <div id="computer-cardstack">
+            <!-- <div class="ccard">
+              <p class="cardname">exploding kittens card game</p>
+            </div> -->
           </div>
-          <div id="ccard-two" class="ccard">
-            <p class="cardname">exploding kittens</p>
-          </div>
-          <div id="ccard-three" class="ccard">
-            <p class="cardname">exploding kittens</p>
-          </div>
-          <div id="ccard-four" class="ccard">
-            <p class="cardname">exploding kittens</p>
-          </div>
-          <div id="ccard-five" class="ccard">
-            <p class="cardname">exploding kittens</p>
-          </div>
+          <p id="playertwoname" class="backlight">playertwoname</p>
         </div>
-        <p id="playertwoname">playertwoname</p>
-        <div id="draw-pile">draw-pile</div>
-        <div id="discard-pile">discard-pile</div>
-        <div id="btndrawdiv"><button id="btndraw">draw</button></div>
-        <p id="playeronename">playeronename</p>
-        <div id="player-cardstack"></div>
-        <!-- <div id="pcard-one" class="pcard">
-          <p id="name-one">name</p>
-          <p id="text-one">text</p>
-        </div> -->
+
+        <div id="pile">
+          <div id="discard-pile">discard-pile</div>
+          <div id="draw-pile">
+            <p>Mini Exploding Kittens Card Game</p>
+            <p>Cards Left:<span id="counter"></span></p>
+          </div>
+          <div id="btndrawdiv"><button id="btndraw">draw</button></div>
+        </div>
+        <div>
+          <p id="playeronename" class="backlight">playeronename</p>
+          <div id="player-cardstack"></div>
+        </div>
       </div>
 
       <button id="btnstart">Back to Start Page</button>

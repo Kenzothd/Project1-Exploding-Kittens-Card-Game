@@ -26,22 +26,22 @@ body {
   background: -moz-linear-gradient(
     121deg,
     rgba(0, 0, 0, 1) 0%,
-    rgba(177, 85, 0, 1) 55%,
-    rgba(255, 0, 0, 1) 100%
+    rgba(82, 11, 11, 1) 44%,
+    rgba(152, 54, 54, 1) 100%
   );
   background: -webkit-linear-gradient(
     121deg,
     rgba(0, 0, 0, 1) 0%,
-    rgba(177, 85, 0, 1) 55%,
-    rgba(255, 0, 0, 1) 100%
+    rgba(82, 11, 11, 1) 44%,
+    rgba(152, 54, 54, 1) 100%
   );
   background: linear-gradient(
     121deg,
     rgba(0, 0, 0, 1) 0%,
-    rgba(177, 85, 0, 1) 55%,
-    rgba(255, 0, 0, 1) 100%
+    rgba(82, 11, 11, 1) 44%,
+    rgba(152, 54, 54, 1) 100%
   );
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#ff0000",GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#983636",GradientType=1);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
   /* height: 100vh; */
@@ -93,6 +93,10 @@ button {
   font-weight: 600;
 }
 
+button:hover {
+  transform: scale(1.05);
+}
+
 footer {
   /* position: fixed; */
   margin-top: auto;
@@ -107,9 +111,10 @@ footer {
 }
 
 #start {
-  background-color: rgba(207, 206, 206, 0.278);
+  background-color: rgba(207, 206, 206, 0);
   border-radius: 7px;
   padding: 1px 10px;
+  border: 2px solid white;
 }
 
 #btngame:hover,
@@ -164,6 +169,7 @@ footer {
   border-radius: 5px;
   padding: 1px 20px;
   margin: 0px 10px 20px 10px;
+  /* border: 1px solid white; */
 }
 
 .summary {
@@ -172,7 +178,8 @@ footer {
 
 /* //////SUBMIT PAGE////// */
 #inputname {
-  border: 1px solid white;
+  border: 2px solid white;
+  border-radius: 5px;
   background-color: rgba(207, 206, 206, 0.252);
   text-align: center;
   padding-bottom: 20px;
@@ -192,57 +199,51 @@ footer {
   display: grid;
   width: 100%;
   height: 100%;
-  /* grid-template-columns: 1fr 1fr 1fr; */
-  grid-template-columns: auto auto auto;
-  /* grid-template-columns: repeat(4, 1fr); */
-  grid-template-rows: repeat(3, 1fr);
-  background-color: rgba(207, 206, 206, 0.252);
+  grid-template-rows: auto auto auto;
   gap: 10px;
-  border: 1px solid white;
+  border: 2px solid white;
+  border-radius: 10px;
   justify-items: center;
-  /* align-items: center; */
+  background-image: url(https://images.unsplash.com/photo-1546484396-fb3fc6f95f98?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZGFyayUyMHdvb2QlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fA%3D%3D&w=1000&q=80);
+  background-size: cover;
 }
 
 #playertwoname {
-  grid-column: 1/2;
-  grid-row: 2/3;
   border: 1px solid white;
   border-radius: 5px;
-  margin-top: -10px;
-  margin-left: 140px;
   font-size: 20px;
-  block-size: fit-content;
+  text-align: center;
   font-weight: 600;
-  background-color: #570d0da2;
-  padding: 5px;
+  width: 500px;
+  margin: 20px auto;
+  background-color: #570d0dc5;
+  padding: 2px;
 }
 
 #playeronename {
-  grid-column: 3/4;
-  grid-row: 2/3;
   border: 1px solid white;
   border-radius: 5px;
-  margin-top: 180px;
-  margin-right: 190px;
   font-size: 20px;
-  block-size: fit-content;
+  text-align: center;
   font-weight: 600;
-  background-color: #570d0da2;
-  padding: 5px;
+  width: 500px;
+  margin: 20px auto;
+  background-color: #570d0de4;
+  padding: 2px;
 }
 
 #computer-cardstack {
-  grid-column: 1/4;
   grid-row: 1/2;
   /* border: 1px solid white; */
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-evenly;
   gap: 10px;
+  margin: 30px 40px 0px 80px;
 }
 
 #player-cardstack {
-  grid-column: 1/4;
   grid-row: 3/4;
   /* border: 1px solid white; */
   display: flex;
@@ -250,55 +251,113 @@ footer {
   flex-wrap: wrap;
   justify-content: space-evenly;
   padding: auto;
-  margin: 0px 100px;
+  margin: 0px 40px 30px 80px;
   /* gap: 10px; */
 }
 
+@keyframes blink {
+  0% {
+    box-shadow: 1px 1px 20px 5px rgba(255, 255, 255, 0.719);
+  }
+  50% {
+    box-shadow: none;
+  }
+  100% {
+    box-shadow: 1px 1px 20px 5px rgba(255, 255, 255, 0.719);
+  }
+}
+@-webkit-keyframes blink {
+  0% {
+    box-shadow: 1px 1px 20px 5px rgba(255, 255, 255, 0.719);
+  }
+  50% {
+    box-shadow: 0 0 0;
+  }
+  100% {
+    box-shadow: 1px 1px 20px 5px rgba(255, 255, 255, 0.719);
+  }
+}
+.backlight {
+  -webkit-animation: blink 1.2s linear infinite;
+  -moz-animation: blink 1.2s linear infinite;
+  -ms-animation: blink 1.2s linear infinite;
+  -o-animation: blink 1.2s linear infinite;
+  animation: blink 1.2s linear infinite;
+}
+
 #draw-pile {
-  grid-column: 2/3;
-  grid-row: 2/3;
   padding: 20px 20px;
-  border: 1px solid white;
+  border: 3px solid white;
   border-radius: 10px;
   background-color: #570d0d;
   block-size: fit-content;
-  margin-right: 150px;
-  margin-top: 40px;
+  font-weight: bold;
+  width: 160px;
+  height: 180px;
+  text-align: center;
+  text-shadow: 3px 3px rgb(0, 0, 0);
+}
+
+#pile {
+  grid-row: 2/3;
+  display: flex;
+  margin: 10px auto;
+  gap: 20px;
+  justify-content: center;
 }
 
 #discard-pile {
-  grid-column: 2/3;
   grid-row: 2/3;
-  padding: 20px 20px;
-  border: 1px solid white;
+  border: 1px dotted white;
   border-radius: 10px;
   block-size: fit-content;
-  margin-left: 150px;
-  margin-top: 40px;
+  font-weight: bold;
+  width: 160px;
+  height: 178px;
+  text-align: center;
+}
+
+.discard {
+  border: 3px solid white;
+  background-color: rgba(137, 137, 137, 0.301);
+  transition: transform 0.2s;
+  border-radius: 10px;
+  text-align: center;
+  width: 160px;
+  height: 180px;
+  padding: 0px 5px;
+}
+
+.discard:hover {
+  box-shadow: 5px 5px 20px 5px rgba(255, 255, 255, 0.719);
+  transform: scale(1.2);
+  background-color: rgba(172, 171, 171, 0.911);
+}
+
+.dcardname {
+  font-size: 20px;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.dcardtext {
+  font-size: 15px;
+  pointer-events: none;
 }
 
 #btndrawdiv {
   padding: 15px;
-  grid-column: 2 / 3;
-  grid-row: 2/3;
-  margin-top: 100px;
-  margin-right: 140px;
-}
 
-#btnuse {
-  grid-column: 4/5;
-  grid-row: 5/6;
-  margin-right: 90px;
-  margin-top: 60px;
-  border: 1px solid white;
-}
-
-#btnuse:hover {
-  background-color: rgba(255, 142, 22, 0.855);
+  /* grid-row: 2/3; */
+  /* margin-top: 100px; */
+  /* margin-right: 140px; */
 }
 
 #btndraw {
-  padding: 5px;
+  background-color: #ffffff45;
+  position: absolute;
+  margin-top: 60px;
+  padding: 5px 10px;
   border: 1px solid white;
 }
 
@@ -311,51 +370,105 @@ footer {
 }
 
 .ccard {
-  border: 1px solid white;
+  border: 3px solid white;
   background-color: #570d0d;
   padding: 20px 20px;
   border-radius: 10px;
   text-align: center;
-  justify-content: center;
   margin-left: -50px;
-  width: 200px;
-  height: 200px;
-}
-
-.cardname {
-  font-weight: 500;
+  width: 160px;
+  height: 180px;
+  font-weight: bold;
+  text-shadow: 3px 3px rgb(0, 0, 0);
 }
 
 .pcard {
-  border: 1px solid white;
+  border: 3px solid white;
   background-color: rgba(137, 137, 137, 0.911);
-  padding: 10px 10px;
   transition: transform 0.2s;
   margin: 0px 10px;
   border-radius: 10px;
   text-align: center;
   margin-left: -50px;
-  width: 200px;
-  height: 200px;
-}
-
-.fixed {
-  position: fixed;
+  width: 160px;
+  height: 180px;
+  padding: 0px 5px;
 }
 
 .pcard:hover {
-  box-shadow: 5px 5px 5px 5px rgba(255, 255, 255, 0.719);
-  transform: scale(1.5);
+  box-shadow: 5px 5px 20px 5px rgba(255, 255, 255, 0.719);
+  transform: scale(1.2);
   background-color: rgba(172, 171, 171, 0.911);
 }
 
 .pcardname {
   font-size: 20px;
   font-weight: 600;
+  pointer-events: none;
 }
 
 .pcardtext {
   font-size: 15px;
+  pointer-events: none;
 }
 
+#prompt {
+  background-color: rgb(137, 137, 137);
+  border: 1px solid white;
+  border-radius: 5px;
+  position: absolute;
+  height: 200px;
+  width: 300px;
+  top: 350px;
+  text-align: center;
+  padding-top: 50px;
+}
+
+#btnquestion {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+#yes,
+#no {
+  padding: 5px 10px;
+  border: 1px solid white;
+}
+
+#yes:hover,
+#no:hover {
+  background-color: rgba(255, 142, 22, 0.855);
+}
+
+#prompttwo {
+  background-color: rgb(137, 137, 137);
+  border: 1px solid white;
+  border-radius: 5px;
+  position: absolute;
+  height: 300px;
+  width: 800px;
+  top: 350px;
+  text-align: center;
+  font-size: large;
+  padding-top: 50px;
+  align-items: center;
+}
+
+#texttwo {
+  font-size: 50px;
+}
+
+#btnprompttwo {
+  padding: 5px 10px;
+  border: 1px solid white;
+}
+
+#btnprompttwo:hover {
+  background-color: rgba(255, 142, 22, 0.855);
+}
+
+.hide {
+  display: none;
+}
 /*////////////////////////////////////*/
