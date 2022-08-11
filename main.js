@@ -155,7 +155,7 @@ class Board {
 
     //5) Player advantage, player will start first
     this.playerTurns = true;
-    $("#playeronename").toggleClass("backlight");
+    $("#playertwoname").removeClass("backlight");
     console.log(this.drawPile[0]);
   }
 
@@ -956,7 +956,6 @@ const startGame = () => {
   const name = $("input").val();
   gameBoard.start(name, "Computer");
   console.log(gameBoard.players);
-  renderPlayerTurn();
 };
 
 const prompt = (text) => {
@@ -1010,7 +1009,6 @@ const main = () => {
   $("#btnsubmit").on("click", () => {
     app.page = "#game";
     startGame();
-    $("#prompt").toggle("hide");
     renderPage();
   });
   $("#btnstart").on("click", () => {
