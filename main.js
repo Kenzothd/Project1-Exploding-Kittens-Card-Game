@@ -5,7 +5,7 @@ import "sanitize.css";
 
 ///////////////////STATE///////////////////////
 const app = {
-  page: "#game",
+  page: "#start",
   instructpage: ["#one", "#two", "#three"],
 };
 
@@ -147,8 +147,7 @@ class Board {
     //4)Add back the exploding kittens into the deck, shuffle  and store it in the draw pile
     iD.addExplodingKittensCard();
     iD.shuffleDeck();
-    // iD.addExplodingKittensCard(); //!!!!remove once done this add the exploding to the top of the deck
-    // iD.addExplodingKittensCard(); //!!!!remove once done this add the exploding to the top of the deck
+
     this.drawPile.push(iD.issuingDeck);
 
     //Display all cards to board
@@ -955,8 +954,7 @@ let gameBoard = new Board();
 const startGame = () => {
   gameBoard = new Board();
   const name = $("input").val();
-  // gameBoard.start(name, "Computer"); //turn back on once game ready
-  gameBoard.start("Player", "Computer");
+  gameBoard.start(name, "Computer");
   console.log(gameBoard.players);
   renderPlayerTurn();
 };
