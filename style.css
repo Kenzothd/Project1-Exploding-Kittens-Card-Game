@@ -80,6 +80,16 @@ footer {
   width: 100%;
 }
 
+@media (max-width: 600px) {
+  .pcard {
+    margin-left: -100px;
+  }
+
+  .ccard {
+    margin-left: -100px;
+  }
+}
+
 /* //////START PAGE////// */
 .howtoplay {
   padding-left: 20px;
@@ -111,19 +121,32 @@ footer {
   top: 32px;
 }
 
-#btnbackward,
-#btnforward {
+#btnprevious,
+#btnnext {
   margin: auto 0;
   border: 1px solid white;
   background-color: #ffffff1f;
   color: aliceblue;
-  padding: 2px;
+  /* padding: 2px; */
+  margin: 0px 2px;
 }
 
-#btnbackward:hover,
-#btnforward:hover {
+#btnprevious:hover,
+#btnnext:hover {
   background-color: rgba(255, 142, 22, 0.855);
   color: white;
+}
+
+svg {
+  pointer-events: none;
+}
+
+.icon-inner {
+  pointer-events: none;
+}
+
+ion-icon {
+  pointer-events: none;
 }
 
 .btnarrow {
@@ -263,7 +286,7 @@ footer {
   block-size: fit-content;
   font-weight: bold;
   width: 160px;
-  height: 180px;
+  height: 190px;
   text-align: center;
   text-shadow: 3px 3px rgb(0, 0, 0);
 }
@@ -283,7 +306,7 @@ footer {
   block-size: fit-content;
   font-weight: bold;
   width: 160px;
-  height: 178px;
+  height: 190px;
   position: relative;
 }
 
@@ -294,8 +317,8 @@ footer {
   border-radius: 10px;
   text-align: center;
   width: 160px;
-  height: 180px;
-  padding: 0px 5px;
+  height: 190px;
+  /* padding: 0px 5px; */
   position: absolute;
 }
 
@@ -344,9 +367,18 @@ footer {
   text-align: center;
   margin-left: -50px;
   width: 160px;
-  height: 180px;
+  height: 190px;
   font-weight: bold;
   text-shadow: 3px 3px rgb(0, 0, 0);
+}
+
+.hoverler:hover {
+  box-shadow: 5px 5px 20px 5px rgba(255, 255, 255, 0.719);
+  transform: scale(1.2);
+}
+
+.cardname {
+  pointer-events: none;
 }
 
 .pcard {
@@ -358,7 +390,7 @@ footer {
   text-align: center;
   margin-left: -50px;
   width: 160px;
-  height: 180px;
+  height: 190px;
   padding: 0px 5px;
 }
 
@@ -414,7 +446,7 @@ footer {
   border-radius: 5px;
   position: absolute;
   height: 300px;
-  width: 800px;
+  width: 600px;
   top: 350px;
   text-align: center;
   padding-top: 50px;

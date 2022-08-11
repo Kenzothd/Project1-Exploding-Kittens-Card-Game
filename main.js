@@ -11,10 +11,9 @@ const app = {
 
 class Card {
   //This is for when I want to pass new type of cards in
-  constructor(name, text, isUsed) {
+  constructor(name, text) {
     this.name = name;
     this.text = text;
-    this.isUsed = isUsed;
   }
 }
 
@@ -54,24 +53,10 @@ class DeckToIssue {
       "Stop the action of another player. You can play this at any time.",
       "Use upon drawing the exploding kittens. Secretly put the exploding kitten card back to the draw pile.",
     ];
-    let isUsed = [
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-    ];
     for (let i = 0; i < name.length; i++) {
       for (let j = 0; j < 2; j++) {
         //loop thru the objects two times and create an issuing deck
-        this.issuingDeck.push(new Card(name[i], text[i], isUsed[i]));
+        this.issuingDeck.push(new Card(name[i], text[i]));
       }
     }
   }
@@ -88,14 +73,12 @@ class DeckToIssue {
 
   addExplodingKittensCard() {
     //this function will push the exploding kittens to the issuing Deck
-    this.issuingDeck.push(
-      new Card("Exploding Kittens💣😹", "You exploded!🤯", false)
-    );
+    this.issuingDeck.push(new Card("Exploding Kittens💣😹", "You exploded!🤯"));
   }
 
   explodingKittensCard() {
     //this will create an exploding kittens card
-    new Card("Exploding Kittens💣😹", "You exploded!🤯", false);
+    new Card("Exploding Kittens💣😹", "You exploded!🤯");
   }
 
   addDefuseCard() {
@@ -103,8 +86,7 @@ class DeckToIssue {
     this.fiveStarterCards.push(
       new Card(
         "Defuse🛠",
-        "Use upon drawing the exploding kittens. Secretly put the exploding kitten card back to the draw pile.",
-        false
+        "Use upon drawing the exploding kittens. Secretly put the exploding kitten card back to the draw pile."
       )
     );
   }
@@ -187,7 +169,7 @@ class Board {
     // remove last(top) card from drawpile
     drawPile.splice([drawPile.length - 1], 1);
     // Reflect all to the board
-    this.renderBoard();
+    // this.renderBoard();
     renderPlayerTurn();
   }
 
@@ -277,15 +259,14 @@ class Board {
   //*check turn --> player draw --> reflects card --> switch player
   checkTurn() {
     if (this.playerTurns === true) {
-      console.log(this.players[1]);
+      console.log("playerdraw");
       this.draw(this.players[0]);
       this.renderBoard();
       this.playerTurns = false;
       console.log(this.playerTurns);
-      // $("#btndraw").attr("disabled", "disabled");
       // this.checkTurn(); //com currently no logic, hence will draw to end turn
+      // $("#btndraw").attr("disabled", "disabled");
     } else {
-      console.log(this.players[1]);
       this.draw(this.players[1]);
       this.renderBoard();
       this.playerTurns = true;
@@ -313,8 +294,7 @@ class Board {
         this.renderBoard();
 
         // switch player turn
-        this.players[0].playerTurns = false;
-        this.players[1].playerTurns = true;
+        this.playerTurns = false;
         this.checkTurn();
       });
       $("#no").on("click", () => {
@@ -344,6 +324,17 @@ class Board {
 
         //reflect on board
         this.renderBoard();
+
+        //prompt it's shuffled
+        promptTwo("Deck is shuffled!👍");
+
+        $("#prompttwo").append(
+          $("<button>").attr("id", "btnprompttwo").text("Done")
+        );
+        //refresh page on click
+        $("#btnprompttwo").on("click", () => {
+          $("#prompttwo").remove();
+        });
       });
 
       $("#no").on("click", () => {
@@ -365,11 +356,13 @@ class Board {
 
         //com will draw two cards
         this.players[1].playerCards.push(
-          this.drawPile[0][this.drawPile.length - 1]
+          this.drawPile[0][this.drawPile[0].length - 1]
         );
+        this.drawPile[0].pop();
         this.players[1].playerCards.push(
-          this.drawPile[0][this.drawPile.length - 1]
+          this.drawPile[0][this.drawPile[0].length - 1]
         );
+        this.drawPile[0].pop();
 
         //reflect on board
         this.renderBoard();
@@ -410,7 +403,7 @@ class Board {
           );
         }
 
-        //add a div to the prompt div
+        //add a button to the prompt div
         $("#promptthree").append(
           $("<button>").attr("id", "btnpromptthree").text("Done")
         );
@@ -433,6 +426,468 @@ class Board {
         //remove prompt
         $("#prompt").remove();
       });
+    } else if (cardName === "Favor🖤") {
+      //*FAVOR FUNCTION*//
+      prompt("Use Favor card?");
+      $("#yes").on("click", () => {
+        //remove prompt
+        $("#prompt").remove();
+
+        //disable click on draw button and pcard
+        $("#btndraw").attr("disabled", "disabled");
+        $("#player-cardstack").css("pointer-events", "none");
+
+        //add used card to discard pile
+        this.discardPile.push(this.players[0].playerCards[CardIndex]);
+
+        //remove from player hand
+        this.players[0].playerCards.splice(CardIndex, 1);
+
+        //reflect on board
+        this.renderBoard();
+
+        promptTwo("Click on a Computer Card to continue!");
+
+        //add a button to the prompt div
+        $("#prompttwo").append(
+          $("<button>").attr("id", "btnprompttwo").text("Done")
+        );
+
+        //clear prompt
+        $("#btnprompttwo").on("click", () => {
+          $("#prompttwo").remove();
+
+          $(".ccard").addClass("hoverler");
+          $("#computer-cardstack").addClass("backlight");
+
+          $("#computer-cardstack").on("click", (e) => {
+            const index = Number(e.target.id);
+
+            $("#prompt").remove();
+
+            $(".ccard").removeClass("hoverler");
+            $("#computer-cardstack").removeClass("backlight");
+
+            //remove from player hand
+            this.players[0].playerCards.push(
+              this.players[1].playerCards[index]
+            );
+
+            //remove from com hand
+            this.players[1].playerCards.splice(index, 1);
+
+            //enable draw button
+            $("#btndraw").removeAttr("disabled", "disabled");
+            $("#player-cardstack").css("pointer-events", "");
+
+            //reflect on board
+            this.renderBoard();
+          });
+        });
+      });
+      $("#no").on("click", () => {
+        //remove prompt
+        $("#prompt").remove();
+      });
+    }
+  }
+
+  cardFunctionsTwo(cardDrawn, CardIndex) {
+    if (cardDrawn === "Catermelon🍉") {
+      const catermelonTwo = this.players[0].playerCards.filter(
+        (element) => element.name === "Catermelon🍉"
+      );
+      if (catermelonTwo.length > 1) {
+        prompt("Use Catermelon🍉 card?");
+        $("#yes").on("click", () => {
+          //remove prompt
+          $("#prompt").remove();
+
+          //add 2 used card to discard pile
+          this.discardPile.push(catermelonTwo[1]);
+          this.discardPile.push(catermelonTwo[0]);
+
+          //remove catermelon from player hands
+          const notCatermelon = this.players[0].playerCards.filter(
+            (element) => element.name !== "Catermelon🍉"
+          );
+
+          this.players[0].playerCards = notCatermelon;
+
+          this.renderBoard();
+
+          promptTwo("Click on a Computer Card to continue!");
+
+          //add a button to the prompt div
+          $("#prompttwo").append(
+            $("<button>").attr("id", "btnprompttwo").text("Done")
+          );
+
+          //clear prompt
+          $("#btnprompttwo").on("click", () => {
+            $("#prompttwo").remove();
+
+            $(".ccard").addClass("hoverler");
+            $("#computer-cardstack").addClass("backlight");
+
+            $("#computer-cardstack").on("click", (e) => {
+              const index = Number(e.target.id);
+
+              $("#prompt").remove();
+
+              $(".ccard").removeClass("hoverler");
+              $("#computer-cardstack").removeClass("backlight");
+
+              //remove from player hand
+              this.players[0].playerCards.push(
+                this.players[1].playerCards[index]
+              );
+
+              //remove from com hand
+              this.players[1].playerCards.splice(index, 1);
+
+              //enable draw button
+              $("#btndraw").removeAttr("disabled", "disabled");
+              $("#player-cardstack").css("pointer-events", "");
+
+              //reflect on board
+              this.renderBoard();
+            });
+          });
+        });
+        $("#no").on("click", () => {
+          //remove prompt
+          $("#prompt").remove();
+        });
+      } else {
+        promptTwo("You need two of the same!");
+
+        //add a button to the prompt div
+        $("#prompttwo").append(
+          $("<button>").attr("id", "btnprompttwo").text("Done")
+        );
+
+        //clear prompt
+        $("#btnprompttwo").on("click", () => {
+          $("#prompttwo").remove();
+        });
+      }
+    } else if (cardDrawn === "Taco Cat🌮") {
+      const tacoCatTwo = this.players[0].playerCards.filter(
+        (element) => element.name === "Taco Cat🌮"
+      );
+      if (tacoCatTwo.length > 1) {
+        prompt("Use Taco Cat🌮 card?");
+        $("#yes").on("click", () => {
+          //remove prompt
+          $("#prompt").remove();
+
+          //add 2 used card to discard pile
+          this.discardPile.push(tacoCatTwo[1]);
+          this.discardPile.push(tacoCatTwo[0]);
+
+          //remove catermelon from player hands
+          const notTacoCat = this.players[0].playerCards.filter(
+            (element) => element.name !== "Taco Cat🌮"
+          );
+
+          this.players[0].playerCards = notTacoCat;
+
+          this.renderBoard();
+
+          promptTwo("Click on a Computer Card to continue!");
+
+          //add a button to the prompt div
+          $("#prompttwo").append(
+            $("<button>").attr("id", "btnprompttwo").text("Done")
+          );
+
+          //clear prompt
+          $("#btnprompttwo").on("click", () => {
+            $("#prompttwo").remove();
+
+            $(".ccard").addClass("hoverler");
+            $("#computer-cardstack").addClass("backlight");
+
+            $("#computer-cardstack").on("click", (e) => {
+              const index = Number(e.target.id);
+
+              $("#prompt").remove();
+
+              $(".ccard").removeClass("hoverler");
+              $("#computer-cardstack").removeClass("backlight");
+
+              //remove from player hand
+              this.players[0].playerCards.push(
+                this.players[1].playerCards[index]
+              );
+
+              //remove from com hand
+              this.players[1].playerCards.splice(index, 1);
+
+              //enable draw button
+              $("#btndraw").removeAttr("disabled", "disabled");
+              $("#player-cardstack").css("pointer-events", "");
+
+              //reflect on board
+              this.renderBoard();
+            });
+          });
+        });
+        $("#no").on("click", () => {
+          //remove prompt
+          $("#prompt").remove();
+        });
+      } else {
+        promptTwo("You need two of the same!");
+
+        //add a button to the prompt div
+        $("#prompttwo").append(
+          $("<button>").attr("id", "btnprompttwo").text("Done")
+        );
+
+        //clear prompt
+        $("#btnprompttwo").on("click", () => {
+          $("#prompttwo").remove();
+        });
+      }
+    } else if (cardDrawn === "Beard Cat🧔🏼‍♀️") {
+      const beardCatTwo = this.players[0].playerCards.filter(
+        (element) => element.name === "Beard Cat🧔🏼‍♀️"
+      );
+      if (beardCatTwo.length > 1) {
+        prompt("Use Beard Cat🧔🏼‍♀️ card?");
+        $("#yes").on("click", () => {
+          //remove prompt
+          $("#prompt").remove();
+
+          //add 2 used card to discard pile
+          this.discardPile.push(beardCatTwo[1]);
+          this.discardPile.push(beardCatTwo[0]);
+
+          //remove catermelon from player hands
+          const notBeardCat = this.players[0].playerCards.filter(
+            (element) => element.name !== "Beard Cat🧔🏼‍♀️"
+          );
+
+          this.players[0].playerCards = notBeardCat;
+
+          this.renderBoard();
+
+          promptTwo("Click on a Computer Card to continue!");
+
+          //add a button to the prompt div
+          $("#prompttwo").append(
+            $("<button>").attr("id", "btnprompttwo").text("Done")
+          );
+
+          //clear prompt
+          $("#btnprompttwo").on("click", () => {
+            $("#prompttwo").remove();
+
+            $(".ccard").addClass("hoverler");
+            $("#computer-cardstack").addClass("backlight");
+
+            $("#computer-cardstack").on("click", (e) => {
+              const index = Number(e.target.id);
+
+              $("#prompt").remove();
+
+              $(".ccard").removeClass("hoverler");
+              $("#computer-cardstack").removeClass("backlight");
+
+              //remove from player hand
+              this.players[0].playerCards.push(
+                this.players[1].playerCards[index]
+              );
+
+              //remove from com hand
+              this.players[1].playerCards.splice(index, 1);
+
+              //enable draw button
+              $("#btndraw").removeAttr("disabled", "disabled");
+              $("#player-cardstack").css("pointer-events", "");
+
+              //reflect on board
+              this.renderBoard();
+            });
+          });
+        });
+        $("#no").on("click", () => {
+          //remove prompt
+          $("#prompt").remove();
+        });
+      } else {
+        promptTwo("You need two of the same!");
+
+        //add a button to the prompt div
+        $("#prompttwo").append(
+          $("<button>").attr("id", "btnprompttwo").text("Done")
+        );
+
+        //clear prompt
+        $("#btnprompttwo").on("click", () => {
+          $("#prompttwo").remove();
+        });
+      }
+    } else if (cardDrawn === "RainbowCat🌈") {
+      const rainbowCatTwo = this.players[0].playerCards.filter(
+        (element) => element.name === "RainbowCat🌈"
+      );
+      if (rainbowCatTwo.length > 1) {
+        prompt("Use RainbowCat🌈 card?");
+        $("#yes").on("click", () => {
+          //remove prompt
+          $("#prompt").remove();
+
+          //add 2 used card to discard pile
+          this.discardPile.push(rainbowCatTwo[1]);
+          this.discardPile.push(rainbowCatTwo[0]);
+
+          //remove catermelon from player hands
+          const notRainbowCat = this.players[0].playerCards.filter(
+            (element) => element.name !== "RainbowCat🌈"
+          );
+
+          this.players[0].playerCards = notRainbowCat;
+
+          this.renderBoard();
+
+          promptTwo("Click on a Computer Card to continue!");
+
+          //add a button to the prompt div
+          $("#prompttwo").append(
+            $("<button>").attr("id", "btnprompttwo").text("Done")
+          );
+
+          //clear prompt
+          $("#btnprompttwo").on("click", () => {
+            $("#prompttwo").remove();
+
+            $(".ccard").addClass("hoverler");
+            $("#computer-cardstack").addClass("backlight");
+
+            $("#computer-cardstack").on("click", (e) => {
+              const index = Number(e.target.id);
+
+              $("#prompt").remove();
+
+              $(".ccard").removeClass("hoverler");
+              $("#computer-cardstack").removeClass("backlight");
+
+              //remove from player hand
+              this.players[0].playerCards.push(
+                this.players[1].playerCards[index]
+              );
+
+              //remove from com hand
+              this.players[1].playerCards.splice(index, 1);
+
+              //enable draw button
+              $("#btndraw").removeAttr("disabled", "disabled");
+              $("#player-cardstack").css("pointer-events", "");
+
+              //reflect on board
+              this.renderBoard();
+            });
+          });
+        });
+        $("#no").on("click", () => {
+          //remove prompt
+          $("#prompt").remove();
+        });
+      } else {
+        promptTwo("You need two of the same!");
+
+        //add a button to the prompt div
+        $("#prompttwo").append(
+          $("<button>").attr("id", "btnprompttwo").text("Done")
+        );
+
+        //clear prompt
+        $("#btnprompttwo").on("click", () => {
+          $("#prompttwo").remove();
+        });
+      }
+    } else if (cardDrawn === "Potato Cat🥔") {
+      const potatoCatTwo = this.players[0].playerCards.filter(
+        (element) => element.name === "Potato Cat🥔"
+      );
+      if (potatoCatTwo.length > 1) {
+        prompt("Use Potato Cat🥔 card?");
+        $("#yes").on("click", () => {
+          //remove prompt
+          $("#prompt").remove();
+
+          //add 2 used card to discard pile
+          this.discardPile.push(potatoCatTwo[1]);
+          this.discardPile.push(potatoCatTwo[0]);
+
+          //remove catermelon from player hands
+          const notPotatoCat = this.players[0].playerCards.filter(
+            (element) => element.name !== "Potato Cat🥔"
+          );
+
+          this.players[0].playerCards = notPotatoCat;
+
+          this.renderBoard();
+
+          promptTwo("Click on a Computer Card to continue!");
+
+          //add a button to the prompt div
+          $("#prompttwo").append(
+            $("<button>").attr("id", "btnprompttwo").text("Done")
+          );
+
+          //clear prompt
+          $("#btnprompttwo").on("click", () => {
+            $("#prompttwo").remove();
+
+            $(".ccard").addClass("hoverler");
+            $("#computer-cardstack").addClass("backlight");
+
+            $("#computer-cardstack").on("click", (e) => {
+              const index = Number(e.target.id);
+
+              $("#prompt").remove();
+
+              $(".ccard").removeClass("hoverler");
+              $("#computer-cardstack").removeClass("backlight");
+
+              //remove from player hand
+              this.players[0].playerCards.push(
+                this.players[1].playerCards[index]
+              );
+
+              //remove from com hand
+              this.players[1].playerCards.splice(index, 1);
+
+              //enable draw button
+              $("#btndraw").removeAttr("disabled", "disabled");
+              $("#player-cardstack").css("pointer-events", "");
+
+              //reflect on board
+              this.renderBoard();
+            });
+          });
+        });
+        $("#no").on("click", () => {
+          //remove prompt
+          $("#prompt").remove();
+        });
+      } else {
+        promptTwo("You need two of the same!");
+
+        //add a button to the prompt div
+        $("#prompttwo").append(
+          $("<button>").attr("id", "btnprompttwo").text("Done")
+        );
+
+        //clear prompt
+        $("#btnprompttwo").on("click", () => {
+          $("#prompttwo").remove();
+        });
+      }
     }
   }
 
@@ -467,7 +922,7 @@ class Board {
     //loop computer-cardstack and reflect cards to html
     const com = this.players[1];
     for (let i = 0; i < com.playerCards.length; i++) {
-      const $div = $("<div>").addClass("ccard");
+      const $div = $("<div>").addClass("ccard").attr("id", `${i}`);
       $("#computer-cardstack").append(
         $div.append(
           $("<p>").text("Mini Exploding Kittens Card Game").addClass("cardname")
@@ -516,13 +971,6 @@ const prompt = (text) => {
   //add buttons to div btnquestion
   $("#btnquestion").append($("<button>").attr("id", "yes").text("Yes"));
   $("#btnquestion").append($("<button>").attr("id", "no").text("No"));
-  //check what the use clicked
-  // $("#yes").on("click", () => {
-
-  // });
-  // $("#no").on("click", () => {
-
-  // });
 };
 
 const promptTwo = (text) => {
@@ -548,8 +996,11 @@ const renderPlayerTurn = () => {
 const renderPage = () => {
   $(".page").hide();
   $(app.page).show();
+};
+
+const renderInstructPage = (iPage) => {
   $(".instruction-page").hide();
-  $(app.instructpage[0]).show(); //findEventID
+  $(app.instructpage[iPage]).show();
 };
 
 ///////////////////MAIN///////////////////////
@@ -589,15 +1040,25 @@ const main = () => {
 
     //call on gameboard functions
     gameBoard.cardFunctions(playerClicked, searchCardIndex);
+    gameBoard.cardFunctionsTwo(playerClicked, searchCardIndex);
   });
 
-  //   $("#btnforward").on("click", (event) => {
-  //     render();
-  //   });
-  //     //input function later
-  //     render();
-  //   });
+  let iPage = 0;
+
+  $("#btnnext").on("click", () => {
+    if (iPage < app.instructpage.length - 1) {
+      renderInstructPage((iPage += 1));
+    }
+  });
+
+  $("#btnprevious").on("click", () => {
+    if (iPage > 0) {
+      renderInstructPage((iPage -= 1));
+    }
+  });
+
   renderPage();
+  renderInstructPage(iPage);
 };
 
 main();
