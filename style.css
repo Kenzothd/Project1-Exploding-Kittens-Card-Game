@@ -96,7 +96,7 @@ footer {
 }
 
 #start {
-  background-color: rgba(207, 206, 206, 0);
+  background-color: rgba(207, 206, 206, 0.2);
   border-radius: 7px;
   padding: 1px 10px;
   border: 2px solid white;
