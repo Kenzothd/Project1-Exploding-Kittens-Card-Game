@@ -1022,8 +1022,6 @@ const main = () => {
     renderPage();
   });
   $("#player-cardstack").on("click", (e) => {
-    console.log($(e.target.children[0]).text());
-    console.log(gameBoard.players[0].playerCards);
     //this is what the player clicked
     const playerClicked = $(e.target.children[0]).text();
 
@@ -1034,7 +1032,6 @@ const main = () => {
     const searchCardIndex = playerCards.findIndex(
       (element) => element.name === playerClicked
     );
-    console.log(searchCardIndex);
 
     //call on gameboard functions
     gameBoard.cardFunctions(playerClicked, searchCardIndex);
