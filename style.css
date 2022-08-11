@@ -1,44 +1,22 @@
 /* //////GLOBAL STYLE////// */
 body {
-  /* Photo by <a href="https://unsplash.com/@akb001?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Andrey Haimin</a> on <a href="https://unsplash.com/s/photos/wood?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a> */
-  /* background-image: url(https://midnightbreeze.mypinata.cloud/ipfs/QmVcZrjzmT7CMa2nkgLN5nXVaydxtwPoyUdofNDLwzFTS8/4737.png);
-  background-size: cover; */
-
-  /* background: rgb(228, 20, 20);
-  background: -moz-radial-gradient(
-    circle,
-    rgba(228, 20, 20, 1) 45%,
-    rgba(198, 2, 42, 1) 100%
-  );
-  background: -webkit-radial-gradient(
-    circle,
-    rgba(228, 20, 20, 1) 45%,
-    rgba(198, 2, 42, 1) 100%
-  );
-  background: radial-gradient(
-    circle,
-    rgba(228, 20, 20, 1) 45%,
-    rgba(198, 2, 42, 1) 100%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e41414",endColorstr="#c6022a",GradientType=1); */
-  /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
   background: rgb(0, 0, 0);
   background: -moz-linear-gradient(
     121deg,
     rgba(0, 0, 0, 1) 0%,
-    rgba(82, 11, 11, 1) 44%,
+    rgba(82, 11, 11, 1) 52%,
     rgba(152, 54, 54, 1) 100%
   );
   background: -webkit-linear-gradient(
     121deg,
     rgba(0, 0, 0, 1) 0%,
-    rgba(82, 11, 11, 1) 44%,
+    rgba(82, 11, 11, 1) 52%,
     rgba(152, 54, 54, 1) 100%
   );
   background: linear-gradient(
     121deg,
     rgba(0, 0, 0, 1) 0%,
-    rgba(82, 11, 11, 1) 44%,
+    rgba(82, 11, 11, 1) 52%,
     rgba(152, 54, 54, 1) 100%
   );
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#983636",GradientType=1);
@@ -98,11 +76,8 @@ button:hover {
 }
 
 footer {
-  /* position: fixed; */
   margin-top: auto;
   width: 100%;
-
-  /* text-align: center; */
 }
 
 /* //////START PAGE////// */
@@ -133,15 +108,12 @@ footer {
 }
 #btnarrowdiv {
   position: relative;
-  /* left: 760px; */
-  /* right: 90px; */
   top: 32px;
 }
 
 #btnbackward,
 #btnforward {
   margin: auto 0;
-  /* color: white; */
   border: 1px solid white;
   background-color: #ffffff1f;
   color: aliceblue;
@@ -245,14 +217,12 @@ footer {
 
 #player-cardstack {
   grid-row: 3/4;
-  /* border: 1px solid white; */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
   padding: auto;
   margin: 0px 40px 30px 80px;
-  /* gap: 10px; */
 }
 
 @keyframes blink {
@@ -314,7 +284,7 @@ footer {
   font-weight: bold;
   width: 160px;
   height: 178px;
-  text-align: center;
+  position: relative;
 }
 
 .discard {
@@ -326,6 +296,7 @@ footer {
   width: 160px;
   height: 180px;
   padding: 0px 5px;
+  position: absolute;
 }
 
 .discard:hover {
@@ -347,10 +318,6 @@ footer {
 
 #btndrawdiv {
   padding: 15px;
-
-  /* grid-row: 2/3; */
-  /* margin-top: 100px; */
-  /* margin-right: 140px; */
 }
 
 #btndraw {
@@ -450,13 +417,12 @@ footer {
   width: 800px;
   top: 350px;
   text-align: center;
-  font-size: large;
   padding-top: 50px;
-  align-items: center;
 }
 
 #texttwo {
-  font-size: 50px;
+  font-size: 40px;
+  font-weight: bold;
 }
 
 #btnprompttwo {
@@ -468,7 +434,79 @@ footer {
   background-color: rgba(255, 142, 22, 0.855);
 }
 
+#promptthree {
+  background-color: rgba(137, 137, 137, 0.9);
+  border: 1px solid white;
+  border-radius: 5px;
+  position: absolute;
+  height: 450px;
+  width: 800px;
+  top: 350px;
+  text-align: center;
+  font-size: large;
+  /* align-items: center; */
+  /* padding-top: 20px; */
+  overflow: auto;
+  display: inline-block;
+}
+
+#textthree {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+#btnpromptthree {
+  padding: 5px 10px;
+  border: 1px solid white;
+}
+
+#btnpromptthree:hover {
+  background-color: rgba(255, 142, 22, 0.855);
+}
+
 .hide {
   display: none;
+}
+
+.flexbox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* justify-content: space-evenly; */
+  justify-content: center;
+}
+
+.stfdisplaytext {
+  font-weight: 800;
+  font-size: 30px;
+}
+
+.stfcard {
+  border: 3px solid white;
+  background-color: rgba(137, 137, 137, 0.911);
+  transition: transform 0.2s;
+  margin: 0px 10px 20px 0px;
+  border-radius: 10px;
+  /* text-align: center; */
+  width: 160px;
+  height: 180px;
+  padding: 0px 5px;
+}
+
+.stfcard:hover {
+  box-shadow: 5px 5px 20px 5px rgba(255, 255, 255, 0.719);
+  transform: scale(1.2);
+  background-color: rgba(172, 171, 171, 0.911);
+}
+
+.stfcardname {
+  font-size: 20px;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.stfcardtext {
+  font-size: 15px;
+  pointer-events: none;
 }
 /*////////////////////////////////////*/

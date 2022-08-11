@@ -11,9 +11,8 @@ const app = {
 
 class Card {
   //This is for when I want to pass new type of cards in
-  constructor(name, utility, text, isUsed) {
+  constructor(name, text, isUsed) {
     this.name = name;
-    this.utility = utility;
     this.text = text;
     this.isUsed = isUsed;
   }
@@ -28,32 +27,18 @@ class DeckToIssue {
   //Create new type of cards(without the expoding kittens and defuse) and push it in the array this.issuingDeck
   createIssuingDeck() {
     let name = [
-      "Attack",
-      "Skip",
-      "Favor",
-      "Shuffle",
-      "Potato Cat",
-      "Beard Cat",
-      "Taco Cat",
-      "Catermelon",
-      "Rainbow Cat",
-      "See The Future",
-      "Nope",
-      "Defuse",
-    ];
-    let utility = [
-      "attack()",
-      "skip()",
-      "favor()",
-      "shuffle()",
-      "twoSame()",
-      "twoSame()",
-      "twoSame()",
-      "twoSame()",
-      "twoSame()",
-      "seeFuture()",
-      "nope()",
-      "defuse()",
+      "Attack🗡",
+      "Skip⏭",
+      "Favor🖤",
+      "Shuffle🔀",
+      "Potato Cat🥔",
+      "Beard Cat🧔🏼‍♀️",
+      "Taco Cat🌮",
+      "Catermelon🍉",
+      "RainbowCat🌈",
+      "See The Future👀",
+      "Nope🙅🏼",
+      "Defuse🛠",
     ];
     let text = [
       "End your turn without drawing a card. Force the next player to take two turns. ",
@@ -86,9 +71,7 @@ class DeckToIssue {
     for (let i = 0; i < name.length; i++) {
       for (let j = 0; j < 2; j++) {
         //loop thru the objects two times and create an issuing deck
-        this.issuingDeck.push(
-          new Card(name[i], utility[i], text[i], isUsed[i])
-        );
+        this.issuingDeck.push(new Card(name[i], text[i], isUsed[i]));
       }
     }
   }
@@ -106,21 +89,20 @@ class DeckToIssue {
   addExplodingKittensCard() {
     //this function will push the exploding kittens to the issuing Deck
     this.issuingDeck.push(
-      new Card("Exploding Kittens", "explode()", "You exploded!", false)
+      new Card("Exploding Kittens💣😹", "You exploded!🤯", false)
     );
   }
 
   explodingKittensCard() {
     //this will create an exploding kittens card
-    new Card("Exploding Kittens", "explode()", "You exploded!", false);
+    new Card("Exploding Kittens💣😹", "You exploded!🤯", false);
   }
 
   addDefuseCard() {
     //this function will push the defuse card int the fiveStarterCards array
     this.fiveStarterCards.push(
       new Card(
-        "Defuse",
-        this.defuse,
+        "Defuse🛠",
         "Use upon drawing the exploding kittens. Secretly put the exploding kitten card back to the draw pile.",
         false
       )
@@ -183,19 +165,283 @@ class Board {
     //4)Add back the exploding kittens into the deck, shuffle  and store it in the draw pile
     iD.addExplodingKittensCard();
     iD.shuffleDeck();
-    iD.addExplodingKittensCard(); //!!!!remove once done this add the exploding to the top of the deck
+    // iD.addExplodingKittensCard(); //!!!!remove once done this add the exploding to the top of the deck
     // iD.addExplodingKittensCard(); //!!!!remove once done this add the exploding to the top of the deck
     this.drawPile.push(iD.issuingDeck);
 
-    //loop player-cardstack,com-cardstack and drawpile then reflect cards to html
-    this.reflectPlayerCard();
-    this.reflectComCard();
-    this.reflectCardsLeft();
-    console.log(this.drawPile); // check if draw pile is correct
+    //Display all cards to board
+    this.renderBoard();
 
     //5) Player advantage, player will start first
     this.playerTurns = true;
     $("#playeronename").toggleClass("backlight");
+    console.log(this.drawPile[0]);
+  }
+
+  draw(player) {
+    const drawPile = this.drawPile[0];
+    //check top card of the drawpile
+    this.checkExplode(drawPile[drawPile.length - 1], player);
+    // push top(last) card from drawpile to playercards array
+    player.playerCards.push(drawPile[drawPile.length - 1]);
+    // remove last(top) card from drawpile
+    drawPile.splice([drawPile.length - 1], 1);
+    // Reflect all to the board
+    this.renderBoard();
+    renderPlayerTurn();
+  }
+
+  checkExplode(cardDrawn, player) {
+    if (cardDrawn.name === "Exploding Kittens💣😹") {
+      //render backlight back to player
+      renderPlayerTurn();
+      //disable onclick on draw btn
+      $("#btndraw").attr("disabled", "disabled");
+      //loop thru playerCards array and find for defuse card
+      const findDefuseIndex = player.playerCards.findIndex(
+        (element) => element.name === "Defuse🛠"
+      );
+      if (findDefuseIndex < 0) {
+        //if no defuse card
+        promptTwo(`No defuse card, ${player.playerName} Lose!🥲`);
+        //add a div to the prompt div
+        $("#prompttwo").append(
+          $("<button>").attr("id", "btnprompttwo").text("Done")
+        );
+        //refresh page on click
+        $("#btnprompttwo").on("click", () => {
+          location.reload(true);
+        });
+        $("#prompttwo").append($("<h3>").text("Click 'done' to restart!"));
+      } else {
+        //if have defuse card, //*DEFUSE FUNCTION*//
+        prompt(`${player.playerName} Exploded!🤯 Use defuse card?`);
+
+        $("#yes").on("click", () => {
+          //remove prompt statement
+          $("#prompt").remove();
+          //1)Add exploding card back to drawpile randomly
+          const randomIndex = Math.floor(
+            Math.random() * this.drawPile[0].length
+          );
+          this.drawPile[0].splice(randomIndex, 0, cardDrawn);
+
+          //2)Remove exploding card from player hand
+          player.playerCards.pop();
+
+          //3)Add used defuse card to discard pile
+          this.discardPile.push(player.playerCards[findDefuseIndex]);
+
+          //4)Remove defuse card from player hand
+          player.playerCards.splice(findDefuseIndex, 1);
+
+          //Reflect all cards on board
+          this.renderBoard();
+
+          //enable draw btn again
+          $("#btndraw").removeAttr("disabled", "disabled");
+
+          //Prompt defused!
+          promptTwo("Bomb have been defused!😮‍💨");
+
+          //add a div to the prompt div
+          $("#prompttwo").append(
+            $("<button>").attr("id", "btnprompttwo").text("Done")
+          );
+          $("#btnprompttwo").on("click", () => {
+            $("#prompttwo").remove();
+          });
+
+          renderPlayerTurn();
+        });
+        $("#no").on("click", () => {
+          //remove prompt statement
+          $("#prompt").remove();
+          promptTwo(`${player.playerName} Lose!🥲`);
+          //add a div to the prompt div
+          $("#prompttwo").append(
+            $("<button>").attr("id", "btnprompttwo").text("Done")
+          );
+          //refresh page on click
+          $("#btnprompttwo").on("click", () => {
+            location.reload(true);
+          });
+          $("#prompttwo").append($("<h3>").text("Click 'done' to restart!"));
+        });
+      }
+    } else {
+      console.log("not yet"); //indicate if its not exploding card being drawn, off later
+    }
+  }
+
+  //*check turn --> player draw --> reflects card --> switch player
+  checkTurn() {
+    if (this.playerTurns === true) {
+      console.log(this.players[1]);
+      this.draw(this.players[0]);
+      this.renderBoard();
+      this.playerTurns = false;
+      console.log(this.playerTurns);
+      // $("#btndraw").attr("disabled", "disabled");
+      // this.checkTurn(); //com currently no logic, hence will draw to end turn
+    } else {
+      console.log(this.players[1]);
+      this.draw(this.players[1]);
+      this.renderBoard();
+      this.playerTurns = true;
+      console.log(this.playerTurns);
+      // $("#btndraw").removeAttr("disabled", "disabled");
+    }
+  }
+
+  //this function solely for the player, not for com
+  cardFunctions(cardName, CardIndex) {
+    if (cardName === "Skip⏭") {
+      //*SKIP FUNCTION*//
+      prompt("Use Skip card?");
+      $("#yes").on("click", () => {
+        //remove prompt
+        $("#prompt").remove();
+
+        //add used card to discard pile
+        this.discardPile.push(this.players[0].playerCards[CardIndex]);
+
+        //remove from player hand
+        this.players[0].playerCards.splice(CardIndex, 1);
+
+        //reflect on board
+        this.renderBoard();
+
+        // switch player turn
+        this.players[0].playerTurns = false;
+        this.players[1].playerTurns = true;
+        this.checkTurn();
+      });
+      $("#no").on("click", () => {
+        //remove prompt
+        $("#prompt").remove();
+      });
+    } else if (cardName === "Shuffle🔀") {
+      //*SHUFFLE FUNCTION*//
+      prompt("Use Shuffle card?");
+      $("#yes").on("click", () => {
+        //remove prompt
+        $("#prompt").remove();
+
+        for (let i = this.drawPile[0].length - 1; i > 0; i--) {
+          //generate a random number from 0 to this.drawPile.length
+          let randomIndex = Math.floor(Math.random() * (i + 1));
+          let temp = this.drawPile[0][i];
+          this.drawPile[0][i] = this.drawPile[0][randomIndex];
+          this.drawPile[0][randomIndex] = temp;
+        }
+
+        //add used card to discard pile
+        this.discardPile.push(this.players[0].playerCards[CardIndex]);
+
+        //remove from player hand
+        this.players[0].playerCards.splice(CardIndex, 1);
+
+        //reflect on board
+        this.renderBoard();
+      });
+
+      $("#no").on("click", () => {
+        //remove prompt
+        $("#prompt").remove();
+      });
+    } else if (cardName === "Attack🗡") {
+      //*ATTACK FUNCTION*//
+      prompt("Use Attack card?");
+      $("#yes").on("click", () => {
+        //remove prompt
+        $("#prompt").remove();
+
+        //add used card to discard pile
+        this.discardPile.push(this.players[0].playerCards[CardIndex]);
+
+        //remove from player hand
+        this.players[0].playerCards.splice(CardIndex, 1);
+
+        //com will draw two cards
+        this.players[1].playerCards.push(
+          this.drawPile[0][this.drawPile.length - 1]
+        );
+        this.players[1].playerCards.push(
+          this.drawPile[0][this.drawPile.length - 1]
+        );
+
+        //reflect on board
+        this.renderBoard();
+      });
+      $("#no").on("click", () => {
+        //remove prompt
+        $("#prompt").remove();
+      });
+    } else if (cardName === "See The Future👀") {
+      //*SEE THE FUTURE FUNCTION*//
+      prompt("Use See The Future card?");
+      $("#yes").on("click", () => {
+        //remove prompt
+        $("#prompt").remove();
+
+        //switch player turn
+        promptThree("See The Future👀");
+
+        //append new div and reflect card on it
+        $("#promptthree").append(
+          $("<p>")
+            .text("Left (Top Card) -> Right (Bottom Card)")
+            .addClass("stfdisplaytext")
+        );
+        $("#promptthree").append($("<div>").addClass("flexbox"));
+        for (
+          let i = this.drawPile[0].length - 1;
+          i > this.drawPile[0].length - 4;
+          i--
+        ) {
+          const $div = $("<div>").addClass("stfcard");
+          $(".flexbox").append($div);
+          $div.append(
+            $("<p>").text(this.drawPile[0][i].name).addClass("stfcardname")
+          );
+          $div.append(
+            $("<p>").text(this.drawPile[0][i].text).addClass("stfcardtext")
+          );
+        }
+
+        //add a div to the prompt div
+        $("#promptthree").append(
+          $("<button>").attr("id", "btnpromptthree").text("Done")
+        );
+
+        //clear prompt
+        $("#btnpromptthree").on("click", () => {
+          $("#promptthree").remove();
+        });
+
+        //add used card to discard pile
+        this.discardPile.push(this.players[0].playerCards[CardIndex]);
+
+        //remove from player hand
+        this.players[0].playerCards.splice(CardIndex, 1);
+
+        //reflect on board
+        this.renderBoard();
+      });
+      $("#no").on("click", () => {
+        //remove prompt
+        $("#prompt").remove();
+      });
+    }
+  }
+
+  //*Reflect all cards on board
+  renderBoard() {
+    this.reflectPlayerCard(); //loop player-cardstack and reflect cards to html
+    this.reflectComCard(); //loop discard-pile and reflect cards to html
+    this.reflectCardsLeft(); // reflects draw pile cards left
+    this.reflectDiscard(); ////loop discard-pile and reflect cards to html
   }
 
   reflectPlayerCard() {
@@ -235,105 +481,6 @@ class Board {
     $("#counter").text(this.drawPile[0].length);
   }
 
-  draw(player) {
-    const drawPile = this.drawPile[0];
-    //check top card of the drawpile
-    this.checkExplode(drawPile[drawPile.length - 1], player);
-    // push top(last) card from drawpile to playercards array
-    player.playerCards.push(drawPile[drawPile.length - 1]);
-    // remove last(top) card from drawpile
-    drawPile.splice([drawPile.length - 1], 1);
-    // console.log(this.drawPile);
-
-    renderBoard();
-    // console.log(this.playerTurns); //check whose turns
-    // console.log(player.playerCards); //check player cards
-  }
-
-  checkExplode(cardDrawn, player) {
-    if (cardDrawn.name === "Exploding Kittens") {
-      renderBoard();
-      //loop thru playerCards array and find for defuse card
-      const findDefuseIndex = player.playerCards.findIndex(
-        (element) => element.name === "Defuse"
-      );
-      if (findDefuseIndex < 0) {
-        //if no defuse card
-        promptTwo("You Lose!🥲");
-        player.lose = true;
-      } else {
-        //if have defuse card
-        prompt("You Exploded!🤯 Use defuse card?");
-
-        $("#yes").on("click", () => {
-          //console.log(player.playerCards[findDefuseIndex]);
-          //player.playerCards[findDefuseIndex].utility();
-          //remove prompt statement
-          $("#prompt").toggle("hide");
-          //1)Add exploding card back to drawpile randomly
-          const randomIndex = Math.floor(
-            Math.random() * this.drawPile[0].length
-          );
-          this.drawPile[0].splice(randomIndex, 0, cardDrawn);
-
-          //2)Remove exploding card from player hand
-          player.playerCards.pop();
-
-          //3)Add used defuse card to discard pile
-          this.discardPile.push(player.playerCards[findDefuseIndex]);
-
-          //4)Remove defuse card from player hand
-          player.playerCards.splice(findDefuseIndex, 1);
-
-          //5)Reflect player cards
-          this.reflectPlayerCard();
-          this.reflectComCard();
-
-          //6)Reflect discard and drawpile cards
-          console.log(this.discardPile);
-          this.reflectDiscard();
-          this.reflectCardsLeft();
-
-          //Prompt defused!
-          promptTwo("Bomb have been defused!😮‍💨");
-          $("#btnprompttwo").on("click", () => {
-            $("#prompttwo").toggle("hide");
-          });
-
-          renderBoard();
-        });
-        $("#no").on("click", () => {
-          //remove prompt statement
-          $("#prompt").toggle("hide");
-          promptTwo("You Lose!🥲");
-          player.lose = true;
-        });
-      }
-    } else {
-      console.log("not yet");
-    }
-  }
-
-  //check turn --> player draw --> reflects card --> switch player
-  checkTurn() {
-    if (this.playerTurns === true) {
-      this.draw(this.players[0]);
-      this.reflectPlayerCard(); //loop player-cardstack and reflect cards to html
-      this.reflectDiscard(); //loop discard-pile and reflect cards to html
-      this.reflectCardsLeft(); // reflects draw pile cards left
-      this.playerTurns = false;
-      console.log(this.playerTurns);
-    } else {
-      this.draw(this.players[1]);
-      this.reflectComCard(); //loop computer-cardstack and reflect cards to html
-      this.reflectDiscard(); //loop discard-pile and reflect cards to html
-      this.reflectCardsLeft(); // reflects draw pile cards left
-      this.playerTurns = true;
-      // this.drawCom();////com currently no logic, hence will draw to end turn
-      console.log(this.playerTurns);
-    }
-  }
-
   reflectDiscard() {
     //empty the board first
     $("#discard-pile").empty();
@@ -356,10 +503,8 @@ const startGame = () => {
   // gameBoard.start(name, "Computer"); //turn back on once game ready
   gameBoard.start("Player", "Computer");
   console.log(gameBoard.players);
-  renderBoard();
+  renderPlayerTurn();
 };
-
-gameBoard.reflectDiscard();
 
 const prompt = (text) => {
   //Add a div with an id of prompt
@@ -373,44 +518,34 @@ const prompt = (text) => {
   $("#btnquestion").append($("<button>").attr("id", "no").text("No"));
   //check what the use clicked
   // $("#yes").on("click", () => {
-  //   console.log(true);
-  //   // return true;
+
   // });
   // $("#no").on("click", () => {
-  //   $("#prompt").toggle("hide");
+
   // });
 };
 
 const promptTwo = (text) => {
-  //Add a div with an id of prompt
+  //Add a div with an id of prompttwo
   $("#gameboard-2P").append($("<div>").attr("id", "prompttwo"));
   //add a h3 element to the div
-  $("#prompttwo").append($("<h3>").attr("id", "texttwo").text(text));
-  //add a div to the prompt div
-  $("#prompttwo").append($("<button>").attr("id", "btnprompttwo").text("Done"));
+  $("#prompttwo").append($("<p>").attr("id", "texttwo").text(text));
 };
 
-// function defuse() {
-//   // console.log(gameBoard.drawPile);
-//   gameBoard.players[0].playerCards.pop();
-//   console.log(gameBoard.players[0].playerCards);
-//   // const randomIndex = Math.floor(Math.random() * gameBoard.drawPile.length);
-//   // gameBoard.drawPile.slice(0, randomIndex).push();
-//   // console.log(gameBoard.player.playerCards.length);
-// }
+const promptThree = (text) => {
+  //Add a div with an id of promptthree
+  $("#gameboard-2P").append($("<div>").attr("id", "promptthree"));
+  //add a h3 element to the div
+  $("#promptthree").append($("<p>").attr("id", "textthree").text(text));
+};
 
 ///////////////////RENDER///////////////////////
-const renderBoard = () => {
-  //   const $board = $("#gameboard-2P").empty();
-  //   $drawPile.hide();
-  //   $drawPile.append(this.players);
-  // const r = new Board();
-  gameBoard.reflectCardsLeft();
+const renderPlayerTurn = () => {
   $("#playertwoname").toggleClass("backlight");
   $("#playeronename").toggleClass("backlight");
 };
 
-const render = () => {
+const renderPage = () => {
   $(".page").hide();
   $(app.page).show();
   $(".instruction-page").hide();
@@ -421,21 +556,21 @@ const render = () => {
 const main = () => {
   $("#btngame").on("click", () => {
     app.page = "#inputname";
-    render();
+    renderPage();
   });
   $("#btnsubmit").on("click", () => {
     app.page = "#game";
     startGame();
     $("#prompt").toggle("hide");
-    render();
+    renderPage();
   });
   $("#btnstart").on("click", () => {
     app.page = "#start";
-    render();
+    renderPage();
   });
   $("#btndraw").on("click", () => {
     gameBoard.checkTurn();
-    render();
+    renderPage();
   });
   $("#player-cardstack").on("click", (e) => {
     console.log($(e.target.children[0]).text());
@@ -450,9 +585,10 @@ const main = () => {
     const searchCardIndex = playerCards.findIndex(
       (element) => element.name === playerClicked
     );
+    console.log(searchCardIndex);
 
-    //return the card function
-    playerCards[searchCardIndex].utility();
+    //call on gameboard functions
+    gameBoard.cardFunctions(playerClicked, searchCardIndex);
   });
 
   //   $("#btnforward").on("click", (event) => {
@@ -461,7 +597,7 @@ const main = () => {
   //     //input function later
   //     render();
   //   });
-  render();
+  renderPage();
 };
 
 main();
