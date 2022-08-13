@@ -5,7 +5,7 @@ import "sanitize.css";
 
 ///////////////////STATE///////////////////////
 const app = {
-  page: "#game",
+  page: "#start",
   instructpage: ["#one", "#two", "#three"],
 };
 
