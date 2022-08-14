@@ -21,7 +21,7 @@ This app is deployed on https://project1-ruby.vercel.app/
 - JavaScript
 - jQuery
 
-# WorkFlow
+# Project Flow
 
 - Day 1-2 : Drafting the basic game structure.
 - Day 3-6 : Coding game logic.
@@ -31,7 +31,7 @@ This app is deployed on https://project1-ruby.vercel.app/
 
 ###### The Approach
 
-During the development, I employed the idea of object-oriented programming. Each card in the stack is an object with a unique property that it inherits from from its parent class. The special attribute of the card will be revealed when it is played. By using this method, I can associate a specific procedure with an object, simplifying and ensuring my code remains comprehensive.
+During the development, I employed the idea of object-oriented programming. Each card in the stack is an object with a unique property that inherits from its parent class. The special attribute of the card will be revealed when it is played. By using this method, I can associate a specific procedure with an object, simplifying and ensuring my code remains comprehensive.
 
 # Disclaimer
 
