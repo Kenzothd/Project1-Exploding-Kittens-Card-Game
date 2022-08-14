@@ -29,6 +29,7 @@ The game allows the player to play with a virtual player. Players can play as ma
    - The computer have no logic hence click on "draw" and the computer will draw a card to end its turn.
 
 **Card Types**
+
 Exploding Kitten(1 Cards) - You must show this card immediately. Unless you have a Defuse card, you’re dead.
 
 Defuse(4 Cards) - Upon drawing an Exploding Kitten, you can play this card instead of dying. The Defuse card will be place in the Discard Pile and the Exploding Kitten card will be placed back in the deck randomly.
