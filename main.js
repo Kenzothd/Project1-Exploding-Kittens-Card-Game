@@ -1,7 +1,6 @@
 import $ from "jquery";
 import "sanitize.css";
 
-// console.log($);
 
 ///////////////////STATE///////////////////////
 const app = {
