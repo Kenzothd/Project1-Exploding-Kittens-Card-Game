@@ -171,24 +171,6 @@ ion-icon {
   padding: 1px 20px;
 }
 
-/* //////SUBMIT PAGE////// */
-#inputname {
-  border: 2px solid white;
-  border-radius: 5px;
-  background-color: rgba(207, 206, 206, 0.252);
-  text-align: center;
-  padding-bottom: 20px;
-}
-
-#btnsubmit {
-  padding: 5px;
-  border: 1px solid white;
-}
-
-#btnsubmit:hover {
-  background-color: rgba(255, 142, 22, 0.855);
-}
-
 /* //////GAME PAGE////// */
 #gameboard-2P {
   display: grid;

@@ -76,11 +76,6 @@ class DeckToIssue {
     this.issuingDeck.push(new Card("Exploding Kittens💣😹", "You exploded!🤯"));
   }
 
-  explodingKittensCard() {
-    //this will create an exploding kittens card
-    new Card("Exploding Kittens💣😹", "You exploded!🤯");
-  }
-
   addDefuseCard() {
     //this function will push the defuse card int the fiveStarterCards array
     this.fiveStarterCards.push(
@@ -145,10 +140,9 @@ class Board {
     iD.issueFiveCards(); //invoking a second time will cause the first fiveStarterCards to be replaced with a new set of 5 cards
     this.players[1].playerCards = iD.fiveStarterCards;
 
-    //4)Add back the exploding kittens into the deck, shuffle  and store it in the draw pile
+    //4)Add back the exploding kittens into the deck, shuffle and store it in the draw pile
     iD.addExplodingKittensCard();
     iD.shuffleDeck();
-
     this.drawPile.push(iD.issuingDeck);
 
     //Display all cards to board
@@ -165,16 +159,18 @@ class Board {
     // push top(last) card from drawpile to playercards array
     player.playerCards.push(drawPile[drawPile.length - 1]);
     //check top card of the drawpile
-    this.checkExplode(drawPile[drawPile.length - 1], player);
+    this.checkExplode(player);
     // remove last(top) card from drawpile
     drawPile.splice([drawPile.length - 1], 1);
-    // Reflect all to the board
-    // this.renderBoard();
-    renderPlayerTurn();
   }
 
-  checkExplode(cardDrawn, player) {
-    if (cardDrawn.name === "Exploding Kittens💣😹") {
+  checkExplode(player) {
+    //loop through playerCards to find exploding
+    const findExplodingIndex = player.playerCards.findIndex(
+      (element) => element.name === "Exploding Kittens💣😹"
+    );
+
+    if (findExplodingIndex > 0) {
       //render backlight back to player
       renderPlayerTurn();
 
@@ -209,10 +205,14 @@ class Board {
           const randomIndex = Math.floor(
             Math.random() * this.drawPile[0].length
           );
-          this.drawPile[0].splice(randomIndex, 0, cardDrawn);
+          this.drawPile[0].splice(
+            randomIndex,
+            0,
+            player.playerCards[findExplodingIndex]
+          );
 
           //2)Remove exploding card from player hand
-          player.playerCards.pop();
+          player.playerCards.splice(findExplodingIndex, 1);
 
           //3)Add used defuse card to discard pile
           this.discardPile.push(player.playerCards[findDefuseIndex]);
@@ -265,18 +265,20 @@ class Board {
     if (this.playerTurns === true) {
       this.draw(this.players[0]);
       this.renderBoard();
+      // switch to com turn
       this.playerTurns = false;
-      console.log(this.playerTurns);
-      // this.checkTurn(); //com currently no logic, hence will draw to end turn
-      // $("#btndraw").attr("disabled", "disabled");
+      renderPlayerTurn();
+      // this.checkTurn(); //auto draw for com and end turn as come currently no logic
+      // $("#btndraw").attr("disabled", "disabled");//only turn on if use auto draw for com
       $("#player-cardstack").css("pointer-events", "none"); // stop player from using cards
     } else {
       $("#player-cardstack").css("pointer-events", ""); // allow player to use card
       this.draw(this.players[1]);
       this.renderBoard();
+      // switch to player turn
       this.playerTurns = true;
-      console.log(this.playerTurns);
-      // $("#btndraw").removeAttr("disabled", "disabled");
+      renderPlayerTurn();
+      // $("#btndraw").removeAttr("disabled", "disabled");//only turn on if use auto draw for com
     }
   }
 
@@ -403,8 +405,8 @@ class Board {
         this.players[1].playerCards.push(drawPile[drawPile.length - 1]);
         drawPile.pop();
         this.players[1].playerCards.push(drawPile[drawPile.length - 1]);
-        this.checkExplode(drawPile[drawPile.length - 1], this.players[1]);
         drawPile.pop();
+        this.checkExplode(this.players[1]);
 
         ////enable click on draw button and pcard
         this.enableDrawPCard();
@@ -955,10 +957,10 @@ class Board {
   reflectDiscard() {
     //empty the board first
     $("#discard-pile").empty();
-    //loop discard-pile and reflect top 2 cards of discard pile to html
-    const discardPile = this.discardPile[0];
-    console.log(discardPile);
-    for (let i = this.discardPile.length - 1; i >= 0; i--) {
+
+    //loop discard-pile and reflect discard pile to html
+    for (let i = 0; i < this.discardPile.length; i++) {
+      const discardPile = this.discardPile[i];
       const $div = $("<div>").addClass("discard");
       $("#discard-pile").append($div);
       $div.append($("<p>").text(discardPile.name).addClass("dcardname"));
@@ -971,9 +973,24 @@ class Board {
 let gameBoard = new Board();
 const startGame = () => {
   gameBoard = new Board();
-  const name = $("input").val();
-  gameBoard.start(name, "Computer");
+  gameBoard.start("Player", "Computer");
   console.log(gameBoard.players);
+};
+
+///////////////////RENDER///////////////////////
+const renderPlayerTurn = () => {
+  $("#playertwoname").toggleClass("backlight");
+  $("#playeronename").toggleClass("backlight");
+};
+
+const renderPage = () => {
+  $(".page").hide();
+  $(app.page).show();
+};
+
+const renderInstructPage = (iPage) => {
+  $(".instruction-page").hide();
+  $(app.instructpage[iPage]).show();
 };
 
 const prompt = (text) => {
@@ -1002,29 +1019,9 @@ const promptThree = (text) => {
   $("#promptthree").append($("<p>").attr("id", "textthree").text(text));
 };
 
-///////////////////RENDER///////////////////////
-const renderPlayerTurn = () => {
-  $("#playertwoname").toggleClass("backlight");
-  $("#playeronename").toggleClass("backlight");
-};
-
-const renderPage = () => {
-  $(".page").hide();
-  $(app.page).show();
-};
-
-const renderInstructPage = (iPage) => {
-  $(".instruction-page").hide();
-  $(app.instructpage[iPage]).show();
-};
-
 ///////////////////MAIN///////////////////////
 const main = () => {
   $("#btngame").on("click", () => {
-    app.page = "#inputname";
-    renderPage();
-  });
-  $("#btnsubmit").on("click", () => {
     app.page = "#game";
     startGame();
     renderPage();
