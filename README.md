@@ -8,7 +8,7 @@ This application recreate a fun board game called "Exploding Kitten". The player
 
 ##### The Set Up
 
-(/img/setup.png)
+![Set Up](/img/setup.png)
 
 ## Live Version
 
