@@ -9,6 +9,7 @@ This application recreate a fun board game called "Exploding Kitten". The player
 ![gameboard](/img/gameboard.png)
 
 **Summary**
+
 The game allows the player to play with a virtual player. Players can play as many cards as they like, but must end their turn by drawing a card from the draw pile. The player who draws an exploding kitten without a defuse card in hand loses.
 
 **Rules**
