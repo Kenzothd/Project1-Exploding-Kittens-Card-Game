@@ -1,7 +1,6 @@
 import $ from "jquery";
 import "sanitize.css";
 
-
 ///////////////////STATE///////////////////////
 const app = {
   page: "#start",
@@ -50,7 +49,7 @@ class DeckToIssue {
       "This is a cat card and is powerless on its own. Play two tacocats as a pair to steal a random card from another player.",
       "Privately view the top three cards of the draw pile",
       "Stop the action of another player. You can play this at any time.",
-      "Use upon drawing the exploding kittens. Secretly put the exploding kitten card back to the draw pile.",
+      "Use upon drawing the exploding kittens. Random put the exploding kitten card back to the draw pile.",
     ];
     for (let i = 0; i < name.length; i++) {
       for (let j = 0; j < 2; j++) {
